@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArenaX Gaming Tournament Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #050b1c;
+            color: white;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Header uses Flexbox */
+
+        header {
+            background: #07142d;
+            border-bottom: 1px solid #1e4c80;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 7%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #16a7ff;
+        }
+
+        .logo small {
+            display: block;
+            font-size: 9px;
+            color: #aab8d4;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav button {
+            background: transparent;
+            color: white;
+            font-size: 15px;
+        }
+
+        nav button:hover {
+            color: #28b9ff;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .login-button,
+        .signup-button,
+        .primary-button,
+        .card-button {
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .login-button {
+            background: transparent;
+            border: 1px solid #2189d5;
+        }
+
+        .signup-button,
+        .primary-button {
+            background: linear-gradient(90deg, #7724ff, #129fff);
+        }
+
+        .signup-button:hover,
+        .primary-button:hover,
+        .card-button:hover {
+            filter: brightness(1.2);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        /* Hero uses Flexbox */
+
+        .hero {
+            min-height: 390px;
+            margin-top: 20px;
+            padding: 55px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #1d5188;
+            border-radius: 16px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 30%, #163eae 0%, transparent 24%),
+                linear-gradient(120deg, #06142d, #190b46);
+        }
+
+        .hero-text {
+            width: 60%;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin: 18px 0;
+        }
+
+        .hero h1 span {
+            color: #33b4ff;
+        }
+
+        .hero p {
+            color: #c0cee3;
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .hero-tag {
+            color: #30c4ff;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .secondary-button {
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            background: transparent;
+            border: 1px solid #318ee4;
+        }
+
+        .hero-art {
+            width: 40%;
+            text-align: center;
+            font-size: 35px;
+            line-height: 1.3;
+            font-weight: bold;
+            color: #dcf5ff;
+            text-shadow: 0 0 20px #14a9ff;
+        }
+
+        .hero-art span {
+            color: #ff40d9;
+        }
+
+        /* Stats uses Flexbox */
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: #0b1d3d;
+            border: 1px solid #1b4778;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 120px;
+        }
+
+        .stat b {
+            font-size: 19px;
+        }
+
+        .stat small {
+            display: block;
+            color: #a7b8d4;
+            margin-top: 4px;
+        }
+
+        .section {
+            padding: 35px 0;
+        }
+
+        .section-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 27px;
+        }
+
+        .section-title-row button {
+            background: transparent;
+            color: #1eb4ff;
+            font-size: 15px;
+        }
+
+        /* Game buttons use Flexbox */
+
+        .games {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 18px;
+            border: 1px solid #1b4778;
+            border-radius: 12px;
+            background: #08162e;
+        }
+
+        .game-button {
+            min-width: 115px;
+            padding: 15px;
+            background: #102445;
+            border: 1px solid #234f82;
+            border-radius: 9px;
+            color: white;
+        }
+
+        .game-button:hover,
+        .game-button.active {
+            border-color: #22b8ff;
+            color: #35c1ff;
+        }
+
+        /* Tournament cards use CSS Grid */
+
+        .tournament-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .tournament-card {
+            background: linear-gradient(145deg, #0d1f40, #081329);
+            border: 1px solid #25568e;
+            border-radius: 12px;
+            padding: 18px;
+            transition: 0.3s;
+        }
+
+        .tournament-card:hover {
+            transform: translateY(-6px);
+            border-color: #20b8ff;
+        }
+
+        .status {
+            display: inline-block;
+            background: #0bc66b;
+            color: white;
+            border-radius: 12px;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .upcoming {
+            background: #7625ec;
+        }
+
+        .game-image {
+            height: 80px;
+            margin: 16px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(120deg, #123c6f, #12072d);
+            border-radius: 8px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .tournament-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .tournament-card p {
+            color: #b4c2d9;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .card-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 17px 0;
+        }
+
+        .card-info div {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .card-info small {
+            color: #8da3c4;
+            font-size: 10px;
+        }
+
+        .card-button {
+            width: 100%;
+            background: #168ef7;
+        }
+
+        .empty-message {
+            color: #aebed6;
+            font-size: 17px;
+        }
+
+        /* Why ArenaX uses Grid */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .feature-box {
+            background: #0b1b37;
+            border: 1px solid #214b7c;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .feature-box h3 {
+            color: #55c8ff;
+            margin-bottom: 9px;
+        }
+
+        .feature-box p {
+            color: #b8c5d8;
+            line-height: 1.5;
+        }
+
+        /* User and Admin dashboard */
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 230px 1fr;
+            gap: 20px;
+            padding: 30px 0;
+        }
+
+        .sidebar {
+            min-height: 420px;
+            padding: 20px;
+            border: 1px solid #245082;
+            border-radius: 10px;
+            background: #08172e;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar button {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 10px;
+            padding: 11px;
+            background: #102545;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .sidebar button:hover {
+            background: #1a4a85;
+        }
+
+        .dashboard-content {
+            padding: 10px;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .dashboard-card {
+            padding: 20px;
+            background: #0a1b37;
+            border: 1px solid #285584;
+            border-radius: 9px;
+        }
+
+        .dashboard-card b {
+            display: block;
+            color: #2fc0ff;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        /* Tables */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #0a1831;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #244971;
+            text-align: left;
+        }
+
+        th {
+            color: #36c4ff;
+        }
+
+        .delete-button {
+            background: #e92761;
+            color: white;
+            padding: 7px 10px;
+            border-radius: 5px;
+        }
+
+        /* Forms */
+
+        .form-box {
+            width: 430px;
+            max-width: 90%;
+            margin: 55px auto;
+            padding: 30px;
+            background: #0a1933;
+            border: 1px solid #285685;
+            border-radius: 12px;
+        }
+
+        .form-box h2 {
+            margin-bottom: 18px;
+        }
+
+        .form-box input,
+        .form-box select,
+        .form-box textarea {
+            width: 100%;
+            margin: 8px 0 15px;
+            padding: 12px;
+            color: white;
+            background: #061225;
+            border: 1px solid #315d91;
+            border-radius: 6px;
+        }
+
+        .form-box textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-box button {
+            width: 100%;
+        }
+
+        .form-message {
+            margin-top: 14px;
+            text-align: center;
+            color: #4eea9c;
+        }
+
+        /* Modal */
+
+        .modal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.78);
+            z-index: 20;
+        }
+
+        .modal {
+            width: 430px;
+            max-width: 90%;
+            position: relative;
+            padding: 28px;
+            background: #0b1c38;
+            border: 1px solid #3988ce;
+            border-radius: 12px;
+        }
+
+        .modal h2 {
+            margin-bottom: 14px;
+        }
+
+        .modal p {
+            color: #c1cee0;
+            line-height: 1.6;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            color: white;
+            background: transparent;
+            font-size: 26px;
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 35px;
+            padding: 30px;
+            text-align: center;
+            background: #061024;
+            border-top: 1px solid #1d426d;
+            color: #adbdd4;
+        }
+
+        footer h2 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        footer h2 span {
+            color: #1baeff;
+        }
+
+        /* Responsive design */
+
+        @media (max-width: 900px) {
+            header {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 35px 25px;
+            }
+
+            .hero-text {
+                width: 100%;
+            }
+
+            .hero-art {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .tournament-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .header-buttons {
+                width: 100%;
+            }
+
+            .header-buttons button {
+                width: 50%;
+            }
+
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .stats {
+                gap: 10px;
+            }
+
+            .stat {
+                min-width: 45%;
+            }
+
+            .tournament-grid,
+            .feature-grid,
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+        <div class="logo">
+            ⬡ ARENA<span>X</span>
+            <small>PLAY • COMPETE • WIN</small>
+        </div>
+
+        <nav>
+            <button onclick="showHome()">Home</button>
+            <button onclick="showTournaments()">Tournaments</button>
+            <button onclick="showLeaderboard()">Leaderboard</button>
+            <button onclick="showMyRegistrations()">My Registrations</button>
+        </nav>
+
+        <div class="header-buttons" id="headerButtons">
+            <button class="login-button" onclick="showLogin()">Log in</button>
+            <button class="signup-button" onclick="showSignup()">Sign up</button>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+
+    <main id="homePage">
+        <section class="hero container">
+            <div class="hero-text">
+                <p class="hero-tag">✦ THE NEXT LEVEL STARTS HERE</p>
+
+                <h1>
+                    JOIN TOURNAMENTS.<br>
+                    SHOW <span>YOUR SKILLS.</span>
+                </h1>
+
+                <p>
+                    ArenaX is a gaming tournament portal where players can
+                    discover events, create teams, register for tournaments,
+                    and compete for prizes.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="primary-button" onclick="showTournaments()">
+                        Explore Tournaments →
+                    </button>
+
+                    <button class="secondary-button" onclick="showAbout()">
+                        About ArenaX
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <b>50K+</b>
+                        <small>Active Players</small>
+                    </div>
+
+                    <div class="stat">
+                        <b>1.2K+</b>
+                        <small>Tournaments</small>
+                    </div>
+
+                    <div class="stat">
+                        <b>₹5L+</b>
+                        <small>Prize Pool</small>
+                    </div>
+
+                    <div class="stat">
+                        <b>4.9/5</b>
+                        <small>Player Rating</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-art">
+                PLAY<br>
+                <span>COMPETE</span><br>
+                WIN
+            </div>
+        </section>
+
+        <section class="section container">
+            <div class="section-title-row">
+                <h2 class="section-title">Popular Games</h2>
+            </div>
+
+            <div class="games">
+                <button class="game-button active" onclick="filterGame('All', this)">
+                    All Games
+                </button>
+
+                <button class="game-button" onclick="filterGame('BGMI', this)">
+                    BGMI
+                </button>
+
+                <button class="game-button" onclick="filterGame('Free Fire', this)">
+                    Free Fire
+                </button>
+
+                <button class="game-button" onclick="filterGame('Valorant', this)">
+                    Valorant
+                </button>
+
+                <button class="game-button" onclick="filterGame('Call of Duty', this)">
+                    Call of Duty
+                </button>
+            </div>
+        </section>
+
+        <section class="section container">
+            <div class="section-title-row">
+                <h2 class="section-title">Upcoming Tournaments</h2>
+
+                <button onclick="showTournaments()">View All →</button>
+            </div>
+
+            <div class="tournament-grid" id="homeTournamentList"></div>
+        </section>
+
+        <section class="section container">
+            <h2 class="section-title">Why Choose ArenaX?</h2>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h3>♢ Fair Play</h3>
+                    <p>Clear rules and transparent tournament results.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🏆 Prize Details</h3>
+                    <p>Players can view prize pools before registration.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>👥 Team System</h3>
+                    <p>Players can create teams and compete together.</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>⚡ Live Updates</h3>
+                    <p>Match schedules, results, and leaderboard scores.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tournaments Page -->
+
+    <main id="tournamentPage" class="hidden">
+        <section class="section container">
+            <div class="section-title-row">
+                <h1 class="section-title">Gaming Tournaments</h1>
+
+                <button class="primary-button" onclick="showHome()">
+                    Back to Home
+                </button>
+            </div>
+
+            <div class="tournament-grid" id="allTournamentList"></div>
+        </section>
+    </main>
+
+    <!-- Leaderboard Page -->
+
+    <main id="leaderboardPage" class="hidden">
+        <section class="section container">
+            <div class="section-title-row">
+                <h1 class="section-title">Leaderboard</h1>
+
+                <button class="primary-button" onclick="showHome()">
+                    Back to Home
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player / Team</th>
+                        <th>Matches</th>
+                        <th>Wins</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+
+                <tbody id="leaderboardList"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- My Registrations Page -->
+
+    <main id="registrationPage" class="hidden">
+        <section class="section container">
+            <div class="section-title-row">
+                <h1 class="section-title">My Registrations</h1>
+
+                <button class="primary-button" onclick="showHome()">
+                    Back to Home
+                </button>
+            </div>
+
+            <div class="tournament-grid" id="registrationList"></div>
+        </section>
+    </main>
+
+    <!-- User Dashboard -->
+
+    <main id="userDashboard" class="hidden">
+        <section class="container dashboard">
+            <aside class="sidebar">
+                <h3>Player Module</h3>
+
+                <button onclick="showHome()">Home</button>
+                <button onclick="showTournaments()">Tournaments</button>
+                <button onclick="showMyRegistrations()">My Registrations</button>
+                <button onclick="showLeaderboard()">Leaderboard</button>
+                <button onclick="showStorage()">Show Local Storage</button>
+                <button onclick="logout()">Logout</button>
+            </aside>
+
+            <div class="dashboard-content">
+                <h1 id="userWelcome">Welcome Player</h1>
+
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <b id="userRegistrationCount">0</b>
+                        <span>Registrations</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b>1,240</b>
+                        <span>Leaderboard Points</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b>3</b>
+                        <span>Available Games</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b>Player</b>
+                        <span>Account Role</span>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Registered Tournaments</h2>
+
+                <div class="tournament-grid" id="userDashboardRegistrations"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Admin Dashboard -->
+
+    <main id="adminDashboard" class="hidden">
+        <section class="container dashboard">
+            <aside class="sidebar">
+                <h3>Admin Module</h3>
+
+                <button onclick="showAdminDashboard()">Dashboard</button>
+                <button onclick="showCreateTournament()">Create Tournament</button>
+                <button onclick="showAdminTournaments()">Manage Tournaments</button>
+                <button onclick="showStorage()">Show Local Storage</button>
+                <button onclick="logout()">Logout</button>
+            </aside>
+
+            <div class="dashboard-content">
+                <h1>Admin Dashboard</h1>
+
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <b id="adminTournamentCount">0</b>
+                        <span>Total Tournaments</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b id="adminRegistrationCount">0</b>
+                        <span>Total Registrations</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b id="adminUserCount">0</b>
+                        <span>Registered Users</span>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <b>Admin</b>
+                        <span>Account Role</span>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Admin Responsibilities</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <h3>Create Events</h3>
+                        <p>Create tournaments with game, prize, date, and slots.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>Manage Events</h3>
+                        <p>View and delete tournaments from the system.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>Manage Registrations</h3>
+                        <p>Monitor player registrations for each tournament.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>Update Results</h3>
+                        <p>Update match winners and leaderboard points later.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Create Tournament -->
+
+    <main id="createTournamentPage" class="hidden">
+        <form class="form-box" onsubmit="createTournament(event)">
+            <h2>Create Tournament</h2>
+
+            <input id="tournamentName" type="text" placeholder="Tournament Name" required>
+
+            <select id="tournamentGame">
+                <option>BGMI</option>
+                <option>Free Fire</option>
+                <option>Valorant</option>
+                <option>Call of Duty</option>
+            </select>
+
+            <input id="tournamentMode" type="text" placeholder="Mode: Example 5v5 or Squad" required>
+
+            <input id="tournamentPrize" type="number" placeholder="Prize Pool" required>
+
+            <input id="tournamentDate" type="date" required>
+
+            <input id="tournamentSlots" type="number" placeholder="Maximum Slots" required>
+
+            <textarea id="tournamentRules" placeholder="Tournament Rules"></textarea>
+
+            <button class="primary-button">Create Tournament</button>
+
+            <p class="form-message" id="createTournamentMessage"></p>
+        </form>
+    </main>
+
+    <!-- Admin Manage Tournaments -->
+
+    <main id="adminTournamentPage" class="hidden">
+        <section class="section container">
+            <div class="section-title-row">
+                <h1 class="section-title">Manage Tournaments</h1>
+
+                <button class="primary-button" onclick="showAdminDashboard()">
+                    Back to Dashboard
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Game</th>
+                        <th>Prize</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="adminTournamentList"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Login -->
+
+    <main id="loginPage" class="hidden">
+        <form class="form-box" onsubmit="login(event)">
+            <h2>Log in to ArenaX</h2>
+
+            <input id="loginEmail" type="email" placeholder="Email Address" required>
+
+            <input id="loginPassword" type="password" placeholder="Password" required>
+
+            <button class="primary-button">Log in</button>
+
+            <p class="form-message" id="loginMessage"></p>
+
+            <p style="margin-top: 18px; text-align: center;">
+                New player?
+                <a href="#" onclick="showSignup()" style="color: #36c1ff;">
+                    Create account
+                </a>
+            </p>
+
+            <p style="margin-top: 10px; color: #9db1cd; font-size: 13px;">
+                Demo Admin: admin@arenax.com<br>
+                Password: admin123
+            </p>
+        </form>
+    </main>
+
+    <!-- Signup -->
+
+    <main id="signupPage" class="hidden">
+        <form class="form-box" onsubmit="signup(event)">
+            <h2>Create ArenaX Account</h2>
+
+            <input id="signupName" type="text" placeholder="Player Name" required>
+
+            <input id="signupEmail" type="email" placeholder="Email Address" required>
+
+            <input id="signupPassword" type="password" placeholder="Password" required>
+
+            <select id="signupRole">
+                <option value="user">Player / User</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button class="primary-button">Sign up</button>
+
+            <p class="form-message" id="signupMessage"></p>
+
+            <p style="margin-top: 18px; text-align: center;">
+                Already have an account?
+                <a href="#" onclick="showLogin()" style="color: #36c1ff;">
+                    Log in
+                </a>
+            </p>
+        </form>
+    </main>
+
+    <!-- About Modal -->
+
+    <div id="aboutModal" class="modal-background hidden">
+        <div class="modal">
+            <button class="close-button" onclick="closeAbout()">×</button>
+
+            <h2>About ArenaX</h2>
+
+            <p>
+                ArenaX solves the problem of manual gaming tournament
+                management. It provides separate Admin and User modules.
+                This review version uses Local Storage to save users,
+                login sessions, tournaments, and registrations.
+            </p>
+        </div>
+    </div>
+
+    <!-- Storage Modal -->
+
+    <div id="storageModal" class="modal-background hidden">
+        <div class="modal">
+            <button class="close-button" onclick="closeStorage()">×</button>
+
+            <h2>Local Storage Data</h2>
+
+            <p id="storageOutput"></p>
+        </div>
+    </div>
+
+    <footer>
+        <h2>ARENA<span>X</span></h2>
+        <p>Gaming Tournament Portal</p>
+        <br>
+        <p>Copyright © 2026 ArenaX. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        /*
+            Local Storage Keys:
+            users
+            currentUser
+            tournaments
+            registrations
+        */
+
+        let selectedGame = "All";
+
+        function getData(key) {
+            return JSON.parse(localStorage.getItem(key)) || [];
+        }
+
+        function saveData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem("currentUser"));
+        }
+
+        function seedData() {
+            let users = getData("users");
+
+            if (users.length === 0) {
+                users.push({
+                    id: 1,
+                    name: "ArenaX Admin",
+                    email: "admin@arenax.com",
+                    password: "admin123",
+                    role: "admin"
+                });
+
+                saveData("users", users);
+            }
+
+            let tournaments = getData("tournaments");
+
+            if (tournaments.length === 0) {
+                tournaments = [
+                    {
+                        id: 1,
+                        name: "BGMI Squad Showdown",
+                        game: "BGMI",
+                        mode: "Squad • Erangel",
+                        prize: 50000,
+                        date: "2026-10-25",
+                        slots: 16,
+                        rules: "No hacks. Follow match timings.",
+                        status: "Live"
+                    },
+                    {
+                        id: 2,
+                        name: "Free Fire Clash Series",
+                        game: "Free Fire",
+                        mode: "Squad • Bermuda",
+                        prize: 30000,
+                        date: "2026-10-28",
+                        slots: 20,
+                        rules: "Respect all players and admins.",
+                        status: "Upcoming"
+                    },
+                    {
+                        id: 3,
+                        name: "Valorant Elite Cup",
+                        game: "Valorant",
+                        mode: "5v5 • Competitive",
+                        prize: 75000,
+                        date: "2026-11-02",
+                        slots: 8,
+                        rules: "Use fair play and correct game settings.",
+                        status: "Upcoming"
+                    }
+                ];
+
+                saveData("tournaments", tournaments);
+            }
+
+            if (!localStorage.getItem("registrations")) {
+                saveData("registrations", []);
+            }
+        }
+
+        function hideAllPages() {
+            document.getElementById("homePage").classList.add("hidden");
+            document.getElementById("tournamentPage").classList.add("hidden");
+            document.getElementById("leaderboardPage").classList.add("hidden");
+            document.getElementById("registrationPage").classList.add("hidden");
+            document.getElementById("userDashboard").classList.add("hidden");
+            document.getElementById("adminDashboard").classList.add("hidden");
+            document.getElementById("createTournamentPage").classList.add("hidden");
+            document.getElementById("adminTournamentPage").classList.add("hidden");
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("signupPage").classList.add("hidden");
+        }
+
+        function showHome() {
+            hideAllPages();
+            document.getElementById("homePage").classList.remove("hidden");
+            showHomeTournaments();
+        }
+
+        function showLogin() {
+            hideAllPages();
+            document.getElementById("loginPage").classList.remove("hidden");
+        }
+
+        function showSignup() {
+            hideAllPages();
+            document.getElementById("signupPage").classList.remove("hidden");
+        }
+
+        function showTournaments() {
+            hideAllPages();
+            document.getElementById("tournamentPage").classList.remove("hidden");
+            showAllTournaments();
+        }
+
+        function showLeaderboard() {
+            hideAllPages();
+            document.getElementById("leaderboardPage").classList.remove("hidden");
+            showLeaderboardData();
+        }
+
+        function showMyRegistrations() {
+            let currentUser = getCurrentUser();
+
+            if (!currentUser) {
+                alert("Please log in first.");
+                showLogin();
+                return;
+            }
+
+            if (currentUser.role === "admin") {
+                alert("Admin does not have player registrations.");
+                showAdminDashboard();
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById("registrationPage").classList.remove("hidden");
+            displayMyRegistrations();
+        }
+
+        function showUserDashboard() {
+            let currentUser = getCurrentUser();
+
+            if (!currentUser) {
+                showLogin();
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById("userDashboard").classList.remove("hidden");
+
+            document.getElementById("userWelcome").innerHTML =
+                "Welcome, " + currentUser.name;
+
+            let registrations = getData("registrations");
+
+            let myRegistrations = registrations.filter(function(registration) {
+                return registration.userId === currentUser.id;
+            });
+
+            document.getElementById("userRegistrationCount").innerHTML =
+                myRegistrations.length;
+
+            displayUserDashboardRegistrations(myRegistrations);
+        }
+
+        function showAdminDashboard() {
+            let currentUser = getCurrentUser();
+
+            if (!currentUser || currentUser.role !== "admin") {
+                alert("Only admin can access this module.");
+                showLogin();
+                return;
+            }
+
+            hideAllPages();
+            document.getElementById("adminDashboard").classList.remove("hidden");
+
+            let tournaments = getData("tournaments");
+            let users = getData("users");
+            let registrations = getData("registrations");
+
+            document.getElementById("adminTournamentCount").innerHTML =
+                tournaments.length;
+
+            document.getElementById("adminUserCount").innerHTML =
+                users.length;
+
+            document.getElementById("adminRegistrationCount").innerHTML =
+                registrations.length;
+        }
+
+        function showCreateTournament() {
+            hideAllPages();
+            document.getElementById("createTournamentPage").classList.remove("hidden");
+        }
+
+        function showAdminTournaments() {
+            hideAllPages();
+            document.getElementById("adminTournamentPage").classList.remove("hidden");
+            displayAdminTournaments();
+        }
+
+        function showAbout() {
+            document.getElementById("aboutModal").classList.remove("hidden");
+        }
+
+        function closeAbout() {
+            document.getElementById("aboutModal").classList.add("hidden");
+        }
+
+        function signup(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("signupName").value;
+            let email = document.getElementById("signupEmail").value;
+            let password = document.getElementById("signupPassword").value;
+            let role = document.getElementById("signupRole").value;
+
+            let users = getData("users");
+
+            let existingUser = users.find(function(user) {
+                return user.email === email;
+            });
+
+            if (existingUser) {
+                document.getElementById("signupMessage").innerHTML =
+                    "This email is already registered.";
+                return;
+            }
+
+            let newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password,
+                role: role
+            };
+
+            users.push(newUser);
+            saveData("users", users);
+
+            document.getElementById("signupMessage").innerHTML =
+                "Signup successful. Please log in.";
+
+            event.target.reset();
+        }
+
+        function login(event) {
+            event.preventDefault();
+
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+
+            let users = getData("users");
+
+            let user = users.find(function(item) {
+                return item.email === email && item.password === password;
+            });
+
+            if (!user) {
+                document.getElementById("loginMessage").innerHTML =
+                    "Invalid email or password.";
+                return;
+            }
+
+            localStorage.setItem("currentUser", JSON.stringify(user));
+
+            document.getElementById("loginMessage").innerHTML =
+                "Login successful.";
+
+            updateHeader();
+
+            if (user.role === "admin") {
+                showAdminDashboard();
+            } else {
+                showUserDashboard();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+
+            updateHeader();
+
+            alert("Logout successful.");
+
+            showHome();
+        }
+
+        function updateHeader() {
+            let currentUser = getCurrentUser();
+            let headerButtons = document.getElementById("headerButtons");
+
+            if (currentUser) {
+                headerButtons.innerHTML =
+                    '<button class="login-button" onclick="openCurrentDashboard()">Dashboard</button>' +
+                    '<button class="signup-button" onclick="logout()">Logout</button>';
+            } else {
+                headerButtons.innerHTML =
+                    '<button class="login-button" onclick="showLogin()">Log in</button>' +
+                    '<button class="signup-button" onclick="showSignup()">Sign up</button>';
+            }
+        }
+
+        function openCurrentDashboard() {
+            let currentUser = getCurrentUser();
+
+            if (!currentUser) {
+                showLogin();
+                return;
+            }
+
+            if (currentUser.role === "admin") {
+                showAdminDashboard();
+            } else {
+                showUserDashboard();
+            }
+        }
+
+        function filterGame(game, button) {
+            selectedGame = game;
+
+            let gameButtons = document.querySelectorAll(".game-button");
+
+            gameButtons.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            showHomeTournaments();
+        }
+
+        function showHomeTournaments() {
+            let tournaments = getData("tournaments");
+
+            let filteredTournaments = tournaments.filter(function(tournament) {
+                return selectedGame === "All" ||
+                    tournament.game === selectedGame;
+            });
+
+            displayTournamentCards(
+                filteredTournaments,
+                "homeTournamentList"
+            );
+        }
+
+        function showAllTournaments() {
+            let tournaments = getData("tournaments");
+
+            displayTournamentCards(
+                tournaments,
+                "allTournamentList"
+            );
+        }
+
+        function displayTournamentCards(tournaments, elementId) {
+            let output = "";
+
+            if (tournaments.length === 0) {
+                output = '<p class="empty-message">No tournaments found.</p>';
+            }
+
+            for (let i = 0; i < tournaments.length; i++) {
+                let tournament = tournaments[i];
+
+                let statusClass = "";
+
+                if (tournament.status === "Upcoming") {
+                    statusClass = "upcoming";
+                }
+
+                output += `
+                    <div class="tournament-card">
+                        <span class="status ${statusClass}">
+                            ${tournament.status}
+                        </span>
+
+                        <div class="game-image">
+                            ${tournament.game}
+                        </div>
+
+                        <h3>${tournament.name}</h3>
+
+                        <p>${tournament.mode}</p>
+
+                        <div class="card-info">
+                            <div>
+                                <small>PRIZE POOL</small>
+                                <b>₹${tournament.prize}</b>
+                            </div>
+
+                            <div>
+                                <small>START DATE</small>
+                                <b>${tournament.date}</b>
+                            </div>
+                        </div>
+
+                        <button
+                            class="card-button"
+                            onclick="registerTournament(${tournament.id})"
+                        >
+                            Register Now
+                        </button>
+                    </div>
+                `;
+            }
+
+            document.getElementById(elementId).innerHTML = output;
+        }
+
+        function registerTournament(tournamentId) {
+            let currentUser = getCurrentUser();
+
+            if (!currentUser) {
+                alert("Please sign up or log in before registration.");
+                showLogin();
+                return;
+            }
+
+            if (currentUser.role === "admin") {
+                alert("Admin cannot register as a tournament player.");
+                return;
+            }
+
+            let registrations = getData("registrations");
+
+            let alreadyRegistered = registrations.find(function(registration) {
+                return registration.userId === currentUser.id &&
+                    registration.tournamentId === tournamentId;
+            });
+
+            if (alreadyRegistered) {
+                alert("You have already registered for this tournament.");
+                return;
+            }
+
+            let newRegistration = {
+                id: Date.now(),
+                userId: currentUser.id,
+                tournamentId: tournamentId,
+                date: new Date().toLocaleDateString()
+            };
+
+            registrations.push(newRegistration);
+
+            saveData("registrations", registrations);
+
+            alert("Tournament registration successful.");
+
+            showMyRegistrations();
+        }
+
+        function displayMyRegistrations() {
+            let currentUser = getCurrentUser();
+            let registrations = getData("registrations");
+            let tournaments = getData("tournaments");
+
+            let myRegistrations = registrations.filter(function(registration) {
+                return registration.userId === currentUser.id;
+            });
+
+            let registeredTournaments = [];
+
+            for (let i = 0; i < myRegistrations.length; i++) {
+                let tournament = tournaments.find(function(item) {
+                    return item.id === myRegistrations[i].tournamentId;
+                });
+
+                if (tournament) {
+                    registeredTournaments.push(tournament);
+                }
+            }
+
+            displayTournamentCards(
+                registeredTournaments,
+                "registrationList"
+            );
+        }
+
+        function displayUserDashboardRegistrations(myRegistrations) {
+            let tournaments = getData("tournaments");
+            let registeredTournaments = [];
+
+            for (let i = 0; i < myRegistrations.length; i++) {
+                let tournament = tournaments.find(function(item) {
+                    return item.id === myRegistrations[i].tournamentId;
+                });
+
+                if (tournament) {
+                    registeredTournaments.push(tournament);
+                }
+            }
+
+            displayTournamentCards(
+                registeredTournaments,
+                "userDashboardRegistrations"
+            );
+        }
+
+        function createTournament(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("tournamentName").value;
+            let game = document.getElementById("tournamentGame").value;
+            let mode = document.getElementById("tournamentMode").value;
+            let prize = document.getElementById("tournamentPrize").value;
+            let date = document.getElementById("tournamentDate").value;
+            let slots = document.getElementById("tournamentSlots").value;
+            let rules = document.getElementById("tournamentRules").value;
+
+            let tournaments = getData("tournaments");
+
+            let newTournament = {
+                id: Date.now(),
+                name: name,
+                game: game,
+                mode: mode,
+                prize: prize,
+                date: date,
+                slots: slots,
+                rules: rules,
+                status: "Upcoming"
+            };
+
+            tournaments.push(newTournament);
+
+            saveData("tournaments", tournaments);
+
+            document.getElementById("createTournamentMessage").innerHTML =
+                "Tournament created successfully.";
+
+            event.target.reset();
+
+            showHomeTournaments();
+        }
+
+        function displayAdminTournaments() {
+            let tournaments = getData("tournaments");
+            let output = "";
+
+            for (let i = 0; i < tournaments.length; i++) {
+                let tournament = tournaments[i];
+
+                output += `
+                    <tr>
+                        <td>${tournament.name}</td>
+                        <td>${tournament.game}</td>
+                        <td>₹${tournament.prize}</td>
+                        <td>${tournament.date}</td>
+                        <td>
+                            <button
+                                class="delete-button"
+                                onclick="deleteTournament(${tournament.id})"
+                            >
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById("adminTournamentList").innerHTML = output;
+        }
+
+        function deleteTournament(tournamentId) {
+            let confirmation = confirm(
+                "Do you want to delete this tournament?"
+            );
+
+            if (!confirmation) {
+                return;
+            }
+
+            let tournaments = getData("tournaments");
+
+            let updatedTournaments = tournaments.filter(function(tournament) {
+                return tournament.id !== tournamentId;
+            });
+
+            saveData("tournaments", updatedTournaments);
+
+            displayAdminTournaments();
+            showHomeTournaments();
+            showAdminDashboard();
+        }
+
+        function showLeaderboardData() {
+            let players = [
+                {
+                    name: "LunarEcho",
+                    matches: 5,
+                    wins: 4,
+                    points: 12
+                },
+                {
+                    name: "VexNova",
+                    matches: 5,
+                    wins: 3,
+                    points: 9
+                },
+                {
+                    name: "MakoRush",
+                    matches: 5,
+                    wins: 3,
+                    points: 9
+                },
+                {
+                    name: "Kiiro",
+                    matches: 5,
+                    wins: 2,
+                    points: 6
+                }
+            ];
+
+            let output = "";
+
+            for (let i = 0; i < players.length; i++) {
+                output += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${players[i].name}</td>
+                        <td>${players[i].matches}</td>
+                        <td>${players[i].wins}</td>
+                        <td>${players[i].points}</td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById("leaderboardList").innerHTML = output;
+        }
+
+        function showStorage() {
+            let users = localStorage.getItem("users");
+            let currentUser = localStorage.getItem("currentUser");
+            let tournaments = localStorage.getItem("tournaments");
+            let registrations = localStorage.getItem("registrations");
+
+            document.getElementById("storageOutput").innerHTML =
+                "<b>users:</b><br>" + users +
+                "<br><br><b>currentUser:</b><br>" + currentUser +
+                "<br><br><b>tournaments:</b><br>" + tournaments +
+                "<br><br><b>registrations:</b><br>" + registrations;
+
+            document.getElementById("storageModal").classList.remove("hidden");
+        }
+
+        function closeStorage() {
+            document.getElementById("storageModal").classList.add("hidden");
+        }
+
+        seedData();
+        updateHeader();
+        showHome();
+    </script>
+
+</body>
+</html>
